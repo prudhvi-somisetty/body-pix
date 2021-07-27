@@ -1,11 +1,3 @@
-//1.install dependencies DONE
-//2 import dependencies DONE
-//3 setup webcam and canvas DONE
-//4 define references to those DONE
-//5 load body pix DONE
-//6 detect function
-//7 draw using drawmask
-
 import React, { useRef } from "react";
 //import logo from './logo.svg';
 import * as tf from "@tensorflow/tfjs";
