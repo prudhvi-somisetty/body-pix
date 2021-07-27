@@ -68,7 +68,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Image Segementation using BodyPix Model</p>
+        <p> Real-Time Image Segementation using BodyPix Model</p>
       </header>
       <div>
         <Webcam
