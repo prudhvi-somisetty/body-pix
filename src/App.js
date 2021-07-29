@@ -96,16 +96,28 @@ function App() {
       <header className="App-header">
         <p> Real-Time Image Segementation using BodyPix Model</p>
       </header>
-      <div>
+      <div className="container">
         <div>
-          <p>Please allow permission for camera to start segmentation </p>
+          <p>Enable camera permission to start segmentation </p>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleClick}
+          >
+            Switch camera
+          </button>
+          <div>
+            {devices.map((device, key) => (
+              <div>
+                <p>{device.label || `Device ${key + 1}`}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <button type="button" className="btn btn-primary" onClick={handleClick}>
-          Switch camera
-        </button>
-        <div className="container-md">
+        <div>
           <Webcam
             ref={webcamRef}
+            audio={false}
             videoConstraints={{
               ...videoConstraints,
               facingMode,
@@ -136,13 +148,6 @@ function App() {
               height: 480,
             }}
           />
-        </div>
-        <div>
-          {devices.map((device, key) => (
-            <div>
-              <p>{device.label || `Device ${key + 1}`}</p>
-            </div>
-          ))}
         </div>
       </div>
       <div class="footer">
