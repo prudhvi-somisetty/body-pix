@@ -108,6 +108,7 @@ function App() {
           </button>
         ) : null}
         <div>
+          Video capture devices present on your device:
           {devices.map((device, key) => (
             <div>
               <p>{device.label || `Device ${key + 1}`}</p>
