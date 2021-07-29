@@ -97,8 +97,8 @@ function App() {
         <p> Real-Time Image Segementation using BodyPix Model</p>
       </header>
       <div className="container">
-        <div>
-          <p>Enable camera permission to start segmentation </p>
+        <p>Enable camera permission to start segmentation </p>
+        {devices.length > 1 ? (
           <button
             type="button"
             className="btn btn-primary"
@@ -106,14 +106,15 @@ function App() {
           >
             Switch camera
           </button>
-          <div>
-            {devices.map((device, key) => (
-              <div>
-                <p>{device.label || `Device ${key + 1}`}</p>
-              </div>
-            ))}
-          </div>
+        ) : null}
+        <div>
+          {devices.map((device, key) => (
+            <div>
+              <p>{device.label || `Device ${key + 1}`}</p>
+            </div>
+          ))}
         </div>
+
         <div>
           <Webcam
             ref={webcamRef}
