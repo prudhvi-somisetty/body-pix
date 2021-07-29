@@ -8,6 +8,39 @@ import "./App.css";
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  //
+  const [deviceId, setDeviceId] = React.useState({});
+  const [devices, setDevices] = React.useState([]);
+
+  const handleDevices = React.useCallback(
+    (mediaDevices) =>
+      setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
+    [setDevices]
+  );
+
+  React.useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then(handleDevices);
+  }, [handleDevices]);
+
+  //
+  const FACING_MODE_USER = "user";
+  const FACING_MODE_ENVIRONMENT = "environment";
+
+  const videoConstraints = {
+    facingMode: FACING_MODE_USER,
+  };
+
+  //const WebcamCapture = () => {
+  const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER);
+
+  const handleClick = React.useCallback(() => {
+    setFacingMode((prevState) =>
+      prevState === FACING_MODE_USER
+        ? FACING_MODE_ENVIRONMENT
+        : FACING_MODE_USER
+    );
+  }, []);
+  //};
 
   const runBodysegement = async () => {
     const net = await bodyPix.load();
@@ -63,34 +96,53 @@ function App() {
         <p> Real-Time Image Segementation using BodyPix Model</p>
       </header>
       <div>
-        <Webcam
-          ref={webcamRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: "0",
-            right: "0",
-            textAlign: "center",
-            zIndex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
-        <canvas
-          ref={canvasRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: "0",
-            right: "0",
-            textAlign: "center",
-            zIndex: 9,
-            width: 640,
-            height: 480,
-          }}
-        />
+        <div>
+          <p>Please allow permission for camera to start segmentation </p>
+        </div>
+        <button onClick={handleClick} className="App-btn">
+          Switch camera
+        </button>
+        <div>
+          <Webcam
+            ref={webcamRef}
+            videoConstraints={{
+              ...videoConstraints,
+              facingMode,
+            }}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: "0",
+              right: "0",
+              textAlign: "center",
+              zIndex: 9,
+              width: 640,
+              height: 480,
+            }}
+          />
+          <canvas
+            ref={canvasRef}
+            style={{
+              position: "absolute",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: "0",
+              right: "0",
+              textAlign: "center",
+              zIndex: 9,
+              width: 640,
+              height: 480,
+            }}
+          />
+        </div>
+        <div>
+          {devices.map((device, key) => (
+            <div>
+              <p>{device.label || `Device ${key + 1}`}</p>
+            </div>
+          ))}
+        </div>
       </div>
       <div class="footer">
         <p>Developed by: Srinivas Prudhvi, Akshata, Asish</p>
