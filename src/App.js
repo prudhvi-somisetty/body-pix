@@ -4,12 +4,13 @@ import * as tf from "@tensorflow/tfjs";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
 import "./App.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   //
-  const [deviceId, setDeviceId] = React.useState({});
+  //const [deviceId, setDeviceId] = React.useState({});
   const [devices, setDevices] = React.useState([]);
 
   const handleDevices = React.useCallback(
@@ -99,10 +100,10 @@ function App() {
         <div>
           <p>Please allow permission for camera to start segmentation </p>
         </div>
-        <button onClick={handleClick} className="App-btn">
+        <button type="button" className="btn btn-primary" onClick={handleClick}>
           Switch camera
         </button>
-        <div>
+        <div className="container-md">
           <Webcam
             ref={webcamRef}
             videoConstraints={{
