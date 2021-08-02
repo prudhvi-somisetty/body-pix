@@ -8,6 +8,8 @@ import Modal from "./Modal/modal.js";
 //import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  const [visibility, setVisibility] = useState(true);
+
   const [show, setShow] = useState(false);
 
   const webcamRef = useRef(null);
@@ -45,6 +47,12 @@ function App() {
     );
   }, []);
   //};
+
+  //toggle webcam on and off
+
+  const handleClickCamState = React.useCallback(() => {
+    setVisibility((prevState) => (prevState === true ? false : true));
+  }, []);
 
   const runBodysegement = async () => {
     const net = await bodyPix.load();
@@ -99,7 +107,17 @@ function App() {
       <header className="App-header">
         <p> Real-Time Image Segementation using BodyPix Model</p>
       </header>
+
       <div>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleClickCamState}
+          >
+            Toggle Camera On/Off
+          </button>
+        </div>
         <div className="buttons">
           <button
             type="button"
@@ -116,7 +134,7 @@ function App() {
             <div>
               <b>Video capture devices present on your device:</b>
               {devices.map((device, key) => (
-                <div>
+                <div key={key}>
                   <p>{device.label || `Device ${key + 1}`}</p>
                 </div>
               ))}
@@ -134,41 +152,43 @@ function App() {
           ) : null}
         </div>
         <div className="container-fluid">
-          <div className="stream">
-            <Webcam
-              ref={webcamRef}
-              audio={false}
-              videoConstraints={{
-                ...videoConstraints,
-                facingMode,
-              }}
-              style={{
-                position: "absolute",
-                marginLeft: "auto",
-                marginRight: "auto",
-                left: "0",
-                right: "0",
-                textAlign: "center",
-                zIndex: 9,
-                width: 480,
-                height: 360,
-              }}
-            />
-            <canvas
-              ref={canvasRef}
-              style={{
-                position: "absolute",
-                marginLeft: "auto",
-                marginRight: "auto",
-                left: "0",
-                right: "0",
-                textAlign: "center",
-                zIndex: 9,
-                width: 480,
-                height: 360,
-              }}
-            />
-          </div>
+          {visibility && (
+            <div className="stream">
+              <Webcam
+                ref={webcamRef}
+                audio={false}
+                videoConstraints={{
+                  ...videoConstraints,
+                  facingMode,
+                }}
+                style={{
+                  position: "absolute",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  left: "0",
+                  right: "0",
+                  textAlign: "center",
+                  zIndex: 9,
+                  width: 480,
+                  height: 360,
+                }}
+              />
+              <canvas
+                ref={canvasRef}
+                style={{
+                  position: "absolute",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                  left: "0",
+                  right: "0",
+                  textAlign: "center",
+                  zIndex: 9,
+                  width: 480,
+                  height: 360,
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
       <div className="footer">
