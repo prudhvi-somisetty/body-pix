@@ -1,12 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 //import logo from './logo.svg';
 import * as tf from "@tensorflow/tfjs";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import Webcam from "react-webcam";
 import "./App.css";
+import Modal from "./Modal/modal.js";
 //import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
+  const [show, setShow] = useState(false);
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   //
@@ -96,65 +99,81 @@ function App() {
       <header className="App-header">
         <p> Real-Time Image Segementation using BodyPix Model</p>
       </header>
-      <div className="container">
-        <p>Enable camera permission to start segmentation </p>
-        {devices.length > 1 ? (
+      <div>
+        <div className="buttons">
           <button
             type="button"
-            className="btn btn-primary"
-            onClick={handleClick}
+            className="btn btn-primary "
+            onClick={() => setShow(true)}
           >
-            Switch camera
+            Video Devices present
           </button>
-        ) : null}
-        <div>
-          Video capture devices present on your device:
-          {devices.map((device, key) => (
+          <Modal
+            title="Video Capture Devices"
+            onClose={() => setShow(false)}
+            show={show}
+          >
             <div>
-              <p>{device.label || `Device ${key + 1}`}</p>
+              <b>Video capture devices present on your device:</b>
+              {devices.map((device, key) => (
+                <div>
+                  <p>{device.label || `Device ${key + 1}`}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </Modal>
 
-        <div>
-          <Webcam
-            ref={webcamRef}
-            audio={false}
-            videoConstraints={{
-              ...videoConstraints,
-              facingMode,
-            }}
-            style={{
-              position: "absolute",
-              marginLeft: "auto",
-              marginRight: "auto",
-              left: "0",
-              right: "0",
-              textAlign: "center",
-              zIndex: 9,
-              width: 640,
-              height: 480,
-            }}
-          />
-          <canvas
-            ref={canvasRef}
-            style={{
-              position: "absolute",
-              marginLeft: "auto",
-              marginRight: "auto",
-              left: "0",
-              right: "0",
-              textAlign: "center",
-              zIndex: 9,
-              width: 640,
-              height: 480,
-            }}
-          />
+          {devices.length > 1 ? (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleClick}
+            >
+              Switch camera
+            </button>
+          ) : null}
+        </div>
+        <div className="container-fluid">
+          <div className="stream">
+            <Webcam
+              ref={webcamRef}
+              audio={false}
+              videoConstraints={{
+                ...videoConstraints,
+                facingMode,
+              }}
+              style={{
+                position: "absolute",
+                marginLeft: "auto",
+                marginRight: "auto",
+                left: "0",
+                right: "0",
+                textAlign: "center",
+                zIndex: 9,
+                width: 480,
+                height: 360,
+              }}
+            />
+            <canvas
+              ref={canvasRef}
+              style={{
+                position: "absolute",
+                marginLeft: "auto",
+                marginRight: "auto",
+                left: "0",
+                right: "0",
+                textAlign: "center",
+                zIndex: 9,
+                width: 480,
+                height: 360,
+              }}
+            />
+          </div>
         </div>
       </div>
-      <div class="footer">
+      <div className="footer">
         <p>
-          <b>V2.2</b>Developed by: Srinivas Prudhvi, Akshata, Asish
+          <b>V2.2 </b>Developed by: Srinivas Prudhvi, Akshata, Asish
         </p>
       </div>
     </div>

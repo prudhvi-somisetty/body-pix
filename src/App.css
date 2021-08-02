@@ -47,6 +47,11 @@
   text-align: center;
 }
 
+.buttons {
+  margin: 10px;
+  margin-right: 10px;
+}
+
 /*.container {
   display: grid;
   grid-template-columns: 0.5fr 2fr 0.5fr;
