@@ -67,7 +67,8 @@ function App() {
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
-      webcamRef.current.video.readyState === 4
+      webcamRef.current.video.readyState === 4 &&
+      visibility === true
     ) {
       // get video details
       const video = webcamRef.current.video;
@@ -79,6 +80,7 @@ function App() {
       webcamRef.current.video.height = videoHeight;
 
       // set canvas width and height
+
       canvasRef.current.width = videoWidth;
       canvasRef.current.height = videoHeight;
 
@@ -118,6 +120,7 @@ function App() {
             Toggle Camera On/Off
           </button>
         </div>
+
         <div className="buttons">
           <button
             type="button"
