@@ -52,7 +52,7 @@ function App() {
   };
 
   const detect = async (net) => {
-    // to chack if data is available
+    // to check if data is available
     if (
       typeof webcamRef.current !== "undefined" &&
       webcamRef.current !== null &&
@@ -153,7 +153,9 @@ function App() {
         </div>
       </div>
       <div class="footer">
-        <p>Developed by: Srinivas Prudhvi, Akshata, Asish</p>
+        <p>
+          <b>V2.2</b>Developed by: Srinivas Prudhvi, Akshata, Asish
+        </p>
       </div>
     </div>
   );
